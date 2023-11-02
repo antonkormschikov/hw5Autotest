@@ -18,7 +18,7 @@ public class WebDriverFactory {
             }
             case "firefox": {
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
-                firefoxOptions.addArguments("--start-maximized");
+                firefoxOptions.addArguments("--fullscreen");
                 return  new FirefoxDriver(firefoxOptions);
             }
         }
