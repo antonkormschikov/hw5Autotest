@@ -57,44 +57,61 @@ Logger logger = Logger.getLogger("");
     //Авторизоваться на сайе
     //Войти в личный кабинет
     //Проверить, что в разделе "О себе" отображаются указанные ранее данные
-    //Домашнее задание принимается в виде ссылки на GitHub репозиторий
-    public void loginOtus(String login, String password) throws InterruptedException {
-        driver.findElement(new By.ByXPath("//button[text()='Войти']")).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        WebElement loginInput = driver.findElement(new By.ByXPath("//input[@name='email']"));
-        new Actions(driver).moveToElement(loginInput)
-                .build()
+    //Домашнее задание принимается
+    // в виде ссылки на GitHub репозиторий
+    public void cleanAndEnter(By by,String sendedKey){
+        WebElement element = driver.findElement(by);
+     //   waiters.waitElementVisible(element);
+        new Actions(driver).moveToElement(element)
+                .click()
                 .perform();
-
-
-       //     sleep(3000);
-
-        //loginInput.click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-    //    loginInput.clear();
-        loginInput.sendKeys(login);
-        WebElement passInput = driver.findElement(new By.ByXPath("//input[@type='password']"));
-        new Actions(driver).moveToElement(passInput)
-                .perform();
-        //a[text(),'Личный кабинет']
-     //   passInput.click();
-     //   passInput.clear();
-        passInput.sendKeys(password);
-        driver.findElement(new By.ByXPath("//button/div[text()='Войти']")).click();
+        waiters.waitElementVisible(element);
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        element.clear();
+        element.sendKeys(sendedKey);
     }
-    public void entryLkOtus()throws InterruptedException {
-        WebElement raskr= driver.findElement(new By.ByXPath("/html/body/div[1]/div[1]/div[1]/div/section/div[2]"));
+
+    public void loginOtus(String login, String password) {
+        driver.findElement(By.xpath("//button[text()='Войти']")).click();
+        cleanAndEnter(By.xpath("//input[@name='email']"),login);
+        cleanAndEnter(By.xpath("//input[@type='password']"),password);
+        driver.findElement(By.xpath("//button/div[text()='Войти']")).click();
+    }
+
+    public void entryLkOtus(){
+        //waiters.waitElementVisible(driver.findElement(By.cssSelector(".sc-199a3eq-0")));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+     //  waiters.waitElementVisible(driver.findElement(By.xpath("//div[span[text()='Владимир']]")));
+        WebElement raskr= driver.findElement(By.xpath("//div[span[text()='Владимир']]"));
+      //  WebElement raskr= driver.findElement(By.cssSelector(".sc-199a3eq-0"));
+        waiters.waitElementVisible(raskr);
         new Actions(driver).moveToElement(raskr)
                            .perform();
 
-        if (waiters.waitElementVisible(driver.findElement(new By.ByXPath("//a[text()='Личный кабинет']")))){
-            driver.findElement(new By.ByXPath("//a[text()='Личный кабинет']")).click();
-        }
+        waiters.waitElementVisible(driver.findElement(By.xpath("//a[text()='Личный кабинет']")));
+            driver.findElement(By.xpath("//a[text()='Мой профиль']")).click();
 
-        driver.findElement(new By.ByXPath("//a[text()='О себе']")).click();
+
+
 
     }
     public void updateMySelf(){
+       /* cleanAndEnter(By.id("id_fname_latin"),nameLat);
+        cleanAndEnter(By.id("id_lname"),surname);
+        cleanAndEnter(By.id("id_lname_latin"),surnameLat);
+        cleanAndEnter(By.id("id_blog_name"),nickName);*/
+        //cleanAndEnter(By.name("date_of_birth"),birthDay);
+
+        driver.findElement(By.xpath("//div/label/input[@name='country']")).click();
+        driver.findElement(By.xpath("//button[@title='"+country+"']")).click();
+
+        driver.findElement(By.xpath("//input[@name='city']")).click();
+        driver.findElement(By.xpath("//button[@title='"+city+"']")).click();
+
+        driver.findElement(By.xpath("//input[@name='english_level']")).click();
+        driver.findElement(By.xpath("//button[@title='"+englishLevel+"']")).click();
+
+        driver.findElement(By.xpath("//button[@name='continue']")).click();
 
     }
 
@@ -102,10 +119,9 @@ Logger logger = Logger.getLogger("");
 
     @BeforeAll
     public static void manager(){
-    //if (BROWSER_NAME.equals("chrome")) {
+
            WebDriverManager.chromedriver().setup();
-    //} else if (BROWSER_NAME.equals("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
+           WebDriverManager.firefoxdriver().setup();
         }
 
 
@@ -128,13 +144,11 @@ Logger logger = Logger.getLogger("");
     @Test
     public void openingMainPage(){
         driver.get(BASE_URL+"/");
-        try {
+       // driver.manage().window().maximize();
+
             loginOtus(LOGIN,PASSWORD);//авторизация
             entryLkOtus();//вход в личный кабинет
-
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+            updateMySelf();
 
 
         ////h2[text()='Авторские онлайн‑курсы для профессионалов']/ancestor::section/div
