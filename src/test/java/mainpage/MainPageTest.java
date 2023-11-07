@@ -73,7 +73,7 @@ Logger logger = Logger.getLogger("");
 
     public void loginOtus(String login, String password) {
         driver.findElement(By.xpath("//button[text()='Войти']")).click();
-        cleanAndEnter(By.xpath("//input[@name='email']"),login);
+        cleanAndEnter(By.xpath("//div/input[@name='email']"),login);
         cleanAndEnter(By.xpath("//input[@type='password']"),password);
         driver.findElement(By.xpath("//button/div[text()='Войти']")).click();
     }
@@ -101,9 +101,13 @@ Logger logger = Logger.getLogger("");
         cleanAndEnter(By.id("id_lname_latin"),surnameLat);
         cleanAndEnter(By.id("id_blog_name"),nickName);*/
         //cleanAndEnter(By.name("date_of_birth"),birthDay);
+        WebElement countryElement=driver.findElement(By.xpath("//div/label/input[@name='country']"));
+        waiters.waitElementVisible(countryElement);
+        new Actions(driver).moveToElement(countryElement).build()
+                        .perform();
+        countryElement.click();
 
-        driver.findElement(By.xpath("//div/label/input[@name='country']")).click();
-        driver.findElement(By.xpath("//button[@title='"+country+"']")).click();
+        driver.findElement(By.xpath(String.format("//button[@title=%s]",country)));
 
         driver.findElement(By.xpath("//input[@name='city']")).click();
         driver.findElement(By.xpath("//button[@title='"+city+"']")).click();
