@@ -1,5 +1,6 @@
 package mainpage;
 
+import data.ICityData;
 import factory.WebDriverFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
@@ -8,6 +9,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import pages.AboutMySelfPage;
+import pages.AccountPage;
+import pages.LoginOtusPage;
 import waiters.Waiters;
 
 import javax.swing.*;
@@ -25,26 +29,6 @@ public class MainPageTest {
 Logger logger = Logger.getLogger("");
 
     private final String BASE_URL=System.getProperty("base.url","https://otus.ru");
-    private final String LOGIN="oxilqrxobfqlrd@hldrive.com";//System.getProperty("login");
-    private final String PASSWORD="Opera-324";//System.getProperty("password");
-
-    private String nameLat="Vladimir";
-    private String surname="Жириновский";
-    private String surnameLat="Jirinovsky";
-    private String nickName="VVJ";
-    private String birthDay="02.11.1946";
-    private String country="Россия";
-    private String city="Москва";
-    private String englishLevel="Начальный уровень (Beginner)";
-    private String readyToMove="Нет";
-    private int[] jobFormat= new int[]{1,1,1};
-    private String email="oxilqrxobfqlrd@hldrive.com";
-    private String phone="+79998887766";
-    private String sex="Мужской";
-    private String company="Кремль";
-    private String jobTitle="Депутат";
-
-
     private WebDriver driver;
     private Waiters waiters;
 
@@ -60,76 +44,23 @@ Logger logger = Logger.getLogger("");
     //Проверить, что в разделе "О себе" отображаются указанные ранее данные
     //Домашнее задание принимается
     // в виде ссылки на GitHub репозиторий
-    public void cleanAndEnter(By by,String sendedKey){
-        WebElement element = driver.findElement(by);
-     //   waiters.waitElementVisible(element);
-        new Actions(driver).moveToElement(element)
-                .click()
-                .perform();
-        waiters.waitElementVisible(element);
-        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        element.clear();
-        element.sendKeys(sendedKey);
-    }
-
-    public void loginOtus(String login, String password) {
-        driver.findElement(By.xpath("//button[text()='Войти']")).click();
-        cleanAndEnter(By.xpath("//div/input[@name='email']"),login);
-        cleanAndEnter(By.xpath("//input[@type='password']"),password);
-        driver.findElement(By.xpath("//button/div[text()='Войти']")).click();
-    }
-
-    public void entryLkOtus(){
-        //waiters.waitElementVisible(driver.findElement(By.cssSelector(".sc-199a3eq-0")));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-     //  waiters.waitElementVisible(driver.findElement(By.xpath("//div[span[text()='Владимир']]")));
-        WebElement raskr= driver.findElement(By.xpath("//div[span[text()='Владимир']]"));
-      //  WebElement raskr= driver.findElement(By.cssSelector(".sc-199a3eq-0"));
-        waiters.waitElementVisible(raskr);
-        new Actions(driver).moveToElement(raskr)
-                           .perform();
-
-        waiters.waitElementVisible(driver.findElement(By.xpath("//a[text()='Личный кабинет']")));
-            driver.findElement(By.xpath("//a[text()='Мой профиль']")).click();
 
 
+    public void  selectCity (ICityData cityData){
+        String locatorCountry = String.format("//div[@title='$s']",cityData.getCountryData().getName());
 
+        //select
+
+        String locatorCity = String.format("//div[@title='$s']",cityData.getName());
+    //select
 
     }
-    public void updateMySelf(){
-        cleanAndEnter(By.id("id_fname_latin"),nameLat);
-        cleanAndEnter(By.id("id_lname"),surname);
-        cleanAndEnter(By.id("id_lname_latin"),surnameLat);
-        cleanAndEnter(By.id("id_blog_name"),nickName);
-
-       //cleanAndEnter(By.name("date_of_birth"),birthDay);
-       WebElement dob = driver.findElement(By.name("date_of_birth"));
-       dob.clear();
-       dob.sendKeys(birthDay);
-       new Actions(driver).moveToLocation(1500,500)
-                           .click()
-                           .perform();
 
 
-        WebElement countryElement=driver.findElement(By.xpath("//label/input[@name='country']"));
-        waiters.waitElementVisible(countryElement);
-        new Actions(driver).moveToElement(countryElement).build()
-                        .perform();
-        countryElement.click();
 
-      driver.findElement(By.xpath(String.format("//button[@title=%s]",country)));
 
-      //  driver.findElement(By.cssSelector("js-lk-cv-dependent-master")).click();
 
-        /*driver.findElement(By.xpath("//input[@name='city']")).click();
-        driver.findElement(By.xpath("//button[@title='"+city+"']")).click();
 
-        driver.findElement(By.xpath("//input[@name='english_level']")).click();
-        driver.findElement(By.xpath("//button[@title='"+englishLevel+"']")).click();
-
-        driver.findElement(By.xpath("//button[@name='continue']")).click();*/
-
-    }
 
 
 
@@ -137,7 +68,7 @@ Logger logger = Logger.getLogger("");
     public static void manager(){
 
            WebDriverManager.chromedriver().setup();
-           WebDriverManager.firefoxdriver().setup();
+         //  WebDriverManager.firefoxdriver().setup();
         }
 
 
@@ -161,10 +92,13 @@ Logger logger = Logger.getLogger("");
     public void openingMainPage(){
         driver.get(BASE_URL+"/");
        // driver.manage().window().maximize();
+        new LoginOtusPage(driver)
+                .loginOtus();//авторизация
+        new AccountPage(driver).
+                entryLkOtus();//вход в личный кабинет
+        new AboutMySelfPage(driver)
+                .updateMySelf(); //Обновление данных о себе
 
-            loginOtus(LOGIN,PASSWORD);//авторизация
-            entryLkOtus();//вход в личный кабинет
-            updateMySelf();
         try {
             Thread.sleep(20000);
         } catch (InterruptedException e) {
