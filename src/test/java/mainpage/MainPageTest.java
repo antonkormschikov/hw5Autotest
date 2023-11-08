@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.filter;
 import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 
 
@@ -96,26 +97,37 @@ Logger logger = Logger.getLogger("");
 
     }
     public void updateMySelf(){
-       /* cleanAndEnter(By.id("id_fname_latin"),nameLat);
+        cleanAndEnter(By.id("id_fname_latin"),nameLat);
         cleanAndEnter(By.id("id_lname"),surname);
         cleanAndEnter(By.id("id_lname_latin"),surnameLat);
-        cleanAndEnter(By.id("id_blog_name"),nickName);*/
-        //cleanAndEnter(By.name("date_of_birth"),birthDay);
-        WebElement countryElement=driver.findElement(By.xpath("//div/label/input[@name='country']"));
+        cleanAndEnter(By.id("id_blog_name"),nickName);
+
+       //cleanAndEnter(By.name("date_of_birth"),birthDay);
+       WebElement dob = driver.findElement(By.name("date_of_birth"));
+       dob.clear();
+       dob.sendKeys(birthDay);
+       new Actions(driver).moveToLocation(1500,500)
+                           .click()
+                           .perform();
+
+
+        WebElement countryElement=driver.findElement(By.xpath("//label/input[@name='country']"));
         waiters.waitElementVisible(countryElement);
         new Actions(driver).moveToElement(countryElement).build()
                         .perform();
         countryElement.click();
 
-        driver.findElement(By.xpath(String.format("//button[@title=%s]",country)));
+      driver.findElement(By.xpath(String.format("//button[@title=%s]",country)));
 
-        driver.findElement(By.xpath("//input[@name='city']")).click();
+      //  driver.findElement(By.cssSelector("js-lk-cv-dependent-master")).click();
+
+        /*driver.findElement(By.xpath("//input[@name='city']")).click();
         driver.findElement(By.xpath("//button[@title='"+city+"']")).click();
 
         driver.findElement(By.xpath("//input[@name='english_level']")).click();
         driver.findElement(By.xpath("//button[@title='"+englishLevel+"']")).click();
 
-        driver.findElement(By.xpath("//button[@name='continue']")).click();
+        driver.findElement(By.xpath("//button[@name='continue']")).click();*/
 
     }
 
@@ -153,7 +165,11 @@ Logger logger = Logger.getLogger("");
             loginOtus(LOGIN,PASSWORD);//авторизация
             entryLkOtus();//вход в личный кабинет
             updateMySelf();
-
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         ////h2[text()='Авторские онлайн‑курсы для профессионалов']/ancestor::section/div
         ////div[./h2[text()='Авторские онлайн‑курсы для профессионалов']]
