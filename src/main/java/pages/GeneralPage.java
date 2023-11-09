@@ -4,15 +4,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pageobject.AbsPageObject;
 import waiters.Waiters;
 
 
 public abstract class GeneralPage extends AbsPageObject{
-
-    public GeneralPage(WebDriver driver, Waiters waiters)
+    //protected Waiters waiters;
+private final String BASE_URL=System.getProperty("base.url","https://otus.ru");
+    public GeneralPage(WebDriver driver)
     {super(driver);
-     super(waiters);
 
     }
 
@@ -26,5 +27,8 @@ public abstract class GeneralPage extends AbsPageObject{
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         element.clear();
         element.sendKeys(sendedKey);
+    }
+    public void openPage(String path){
+        driver.get(BASE_URL+path);
     }
 }

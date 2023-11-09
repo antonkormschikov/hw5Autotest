@@ -8,8 +8,8 @@ public class AbsPageObject {
     protected Waiters waiters;
 
 
-    public AbsPageObject(WebDriver driver, Waiters waiters) {
+    public AbsPageObject(WebDriver driver) {
         this.driver = driver;
-        this.waiters = waiters;
+        this.waiters=new Waiters(driver);
     }
 }

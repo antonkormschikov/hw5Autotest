@@ -21,4 +21,5 @@ public class LoginOtusPage extends GeneralPage {
         new LoginOtusPage(driver).cleanAndEnter(By.xpath("//input[@type='password']"),PASSWORD);
         driver.findElement(By.xpath("//button/div[text()='Войти']")).click();
     }
+
 }

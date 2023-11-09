@@ -3,32 +3,24 @@ package mainpage;
 import data.ICityData;
 import factory.WebDriverFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import pages.AboutMySelfPage;
 import pages.AccountPage;
 import pages.LoginOtusPage;
 import waiters.Waiters;
 
-import javax.swing.*;
-import java.sql.DriverManager;
-import java.time.Duration;
 import java.util.logging.Logger;
 
 import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.filter;
-import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 
 
-public class MainPageTest {
+public class UpdateAboutMySelfInfo_Test {
 Logger logger = Logger.getLogger("");
 
-    private final String BASE_URL=System.getProperty("base.url","https://otus.ru");
+   
     private WebDriver driver;
     private Waiters waiters;
 
@@ -55,15 +47,6 @@ Logger logger = Logger.getLogger("");
     //select
 
     }
-
-
-
-
-
-
-
-
-
     @BeforeAll
     public static void manager(){
 
@@ -89,9 +72,11 @@ Logger logger = Logger.getLogger("");
     }
 
     @Test
-    public void openingMainPage(){
-        driver.get(BASE_URL+"/");
+    public void openingMainPage() throws InterruptedException {
+        
        // driver.manage().window().maximize();
+        new LoginOtusPage(driver)
+                .openPage("/"); //переход на главную страницу
         new LoginOtusPage(driver)
                 .loginOtus();//авторизация
         new AccountPage(driver).
@@ -100,7 +85,7 @@ Logger logger = Logger.getLogger("");
                 .updateMySelf(); //Обновление данных о себе
 
         try {
-            Thread.sleep(20000);
+            sleep(20000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
