@@ -1,5 +1,6 @@
 package pages;
 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,5 +31,16 @@ private final String BASE_URL=System.getProperty("base.url","https://otus.ru");
     }
     public void openPage(String path){
         driver.get(BASE_URL+path);
+    }
+    public void checkStateAndClickCheckbox(Boolean mustBeState, String inputLocator, String divLocator){
+        if (mustBeState) {
+            if (!driver.findElement(By.xpath(inputLocator)).isSelected()){
+                driver.findElement(By.xpath(divLocator)).click();
+            }
+        } else if (!mustBeState){
+            if (driver.findElement(By.xpath(inputLocator)).isSelected()){
+                driver.findElement(By.xpath(divLocator)).click();
+            }
+        }
     }
 }

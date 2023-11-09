@@ -85,7 +85,7 @@ Logger logger = Logger.getLogger("");
                 .updateMySelf(); //Обновление данных о себе
 
         try {
-            sleep(20000);
+            sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
