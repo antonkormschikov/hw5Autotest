@@ -2,6 +2,9 @@ package pages;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.NoSuchElementException;
@@ -17,11 +20,11 @@ public class AboutMySelfPage extends GeneralPage {
     private String country="Россия";
     private String city="Москва";
     private String englishLevel="Начальный уровень (Beginner)";
-    private String readyToMove="Нет";
+    private boolean readyToMove=true;
     private boolean[] jobFormat= new boolean[]{true,true,false};
-    private String email="oxilqrxobfqlrd@hldrive.com";
-    private String phone="+79998887766";
-    private String sex="Мужской";
+    /*private String email="oxilqrxobfqlrd@hldrive.com";
+    private String phone="+79998887766";*/
+    private String sex="male";
     private String company="Кремль";
     private String jobTitle="Депутат";
     private String[] communicationМethod1= new String[]{"VK","vk.com/test"};
@@ -53,26 +56,22 @@ public class AboutMySelfPage extends GeneralPage {
         cleanAndEnter(By.id("id_lname"), surname);
         cleanAndEnter(By.id("id_lname_latin"), surnameLat);
         cleanAndEnter(By.id("id_blog_name"), nickName);
-
         cleanAndEnter(By.name("date_of_birth"),birthDay);
-
         new Actions(driver).moveToLocation(1500, 500)
                 .click()
                 .perform();
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
-
-
         js.executeScript("window.scrollBy(0,700)");
         ///выбор страны
-        WebElement countryElement = driver.findElement(By.xpath("//div[label/input[@name='country']]"));
+      /*  WebElement countryElement = driver.findElement(By.xpath("//div[label/input[@name='country']]"));
         waiters.waitElementVisible(countryElement);
         new Actions(driver).moveToElement(countryElement)
                 .build()
                 .perform();
         countryElement.click();
 
-        WebElement countryButton =driver.findElement(By.xpath(String.format("//button[@title=%s]",country)));
+        WebElement countryButton =driver.findElement(By.xpath(String.format("//button[@title='%s']",country)));
         waiters.waitElementVisible(countryButton);
         new Actions(driver).moveToElement(countryButton)
                 .build()
@@ -80,7 +79,7 @@ public class AboutMySelfPage extends GeneralPage {
         countryButton.click();
 
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         ////////выбор города
         WebElement cityElement = driver.findElement(By.xpath("//div[label/input[@name='city']]"));
         waiters.waitElementVisible(cityElement);
@@ -96,27 +95,35 @@ public class AboutMySelfPage extends GeneralPage {
         englishLevelElement.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.findElement(By.xpath("//button[@title='"+englishLevel+"']")).click();
-
+*/
         //готов к переезду
 
-        driver.findElement(By.xpath(String.format("//label[span[text()=%s]]", "" + readyToMove + "")));
-        if (readyToMove.equals("Нет")) {
-            driver.findElement(By.xpath("//label[input[@name='ready_to_relocate and @value='false']]"));
-        }
-        if (readyToMove.equals("Да")) {
-            driver.findElement(By.xpath("//label[input[@name='ready_to_relocate and @value='True']]"));
+        if (readyToMove) {
+            driver.findElement(By.xpath("//label[input[@id='id_ready_to_relocate_1']]")).click();
+        } else {
+            driver.findElement(By.xpath("//label[input[@id='id_ready_to_relocate_0']]")).click();
         }
         ////формат работы
         checkStateAndClickCheckbox(jobFormat[0], jobFormatFullInpulLocator, jobFormatFullDivLocator);
         checkStateAndClickCheckbox(jobFormat[1], jobFormatFlexibleInpulLocator, jobFormatFlexibleDivLocator);
         checkStateAndClickCheckbox(jobFormat[2], jobFormatRemoteInpulLocator, jobFormatRemoteDivLocator);
-        ///добавление контоктов
-        addCommunicationMethod(communicationМethod1);
-        addCommunicationMethod(communicationМethod1);
+        ///добавление контактов
+    //    addCommunicationMethod(communicationМethod1);
+      //  addCommunicationMethod(communicationМethod1);
+
+        ///пол
+        WebDriverWait webDriverWait = new WebDriverWait(driver,Duration.ofSeconds(30));
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("id_gender")));
+        driver.findElement(By.xpath("//option[@value='m']")).click();
+
+            //сoхраняемся
+        driver.findElement(By.xpath("//button[@name='continue']")).click();
 
 
-            driver.findElement(By.xpath("//button[@name='continue']")).click();
 
+        }
+        public void assertMySelfData(){
+        assert 1==1;
         }
 
 

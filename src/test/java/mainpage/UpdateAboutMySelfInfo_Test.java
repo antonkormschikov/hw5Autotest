@@ -75,14 +75,17 @@ Logger logger = Logger.getLogger("");
     public void openingMainPage() throws InterruptedException {
         
        // driver.manage().window().maximize();
-        new LoginOtusPage(driver)
-                .openPage("/"); //переход на главную страницу
-        new LoginOtusPage(driver)
-                .loginOtus();//авторизация
-        new AccountPage(driver).
-                entryLkOtus();//вход в личный кабинет
-        new AboutMySelfPage(driver)
-                .updateMySelf(); //Обновление данных о себе
+        new LoginOtusPage(driver).openPage("/"); //переход на главную страницу
+        new LoginOtusPage(driver).loginOtus();//авторизация
+        new AccountPage(driver).entryLkOtus();//вход в личный кабинет
+        new AboutMySelfPage(driver).updateMySelf(); //Обновление данных о себе
+        close();//закрываем браузер
+        init();//открываем браузер снова
+        new LoginOtusPage(driver).openPage("/");//переход на главную страницу
+        new LoginOtusPage(driver).loginOtus();//авторизация
+        new AccountPage(driver).entryLkOtus();//вход в личный кабинет
+        new AboutMySelfPage(driver).assertMySelfData();
+
 
         try {
             sleep(5000);

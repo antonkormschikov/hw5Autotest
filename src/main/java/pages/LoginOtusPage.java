@@ -21,8 +21,8 @@ public class LoginOtusPage extends GeneralPage {
 
     public void loginOtus() {
         driver.findElement(By.xpath(enterButtonLocator)).click();
-        new LoginOtusPage(driver).cleanAndEnter(By.xpath(inputEmailLocator),LOGIN);
-        new LoginOtusPage(driver).cleanAndEnter(By.xpath(inputPassLocator),PASSWORD);
+        cleanAndEnter(By.xpath(inputEmailLocator),LOGIN);
+        cleanAndEnter(By.xpath(inputPassLocator),PASSWORD);
         driver.findElement(By.xpath(enterButtonLocator2)).click();
 
     }
