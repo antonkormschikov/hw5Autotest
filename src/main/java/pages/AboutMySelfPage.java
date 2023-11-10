@@ -1,5 +1,6 @@
 package pages;
 
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -24,7 +25,7 @@ public class AboutMySelfPage extends GeneralPage {
     private boolean[] jobFormat= new boolean[]{true,true,false};
     /*private String email="oxilqrxobfqlrd@hldrive.com";
     private String phone="+79998887766";*/
-    private String sex="male";
+    private String sex="m";
     private String company="Кремль";
     private String jobTitle="Депутат";
     private String[] communicationМethod1= new String[]{"VK","vk.com/test"};
@@ -45,9 +46,9 @@ public class AboutMySelfPage extends GeneralPage {
     }
     public void addCommunicationMethod(String[] communicationМethod){
 
-        driver.findElement(By.xpath("//div[span[text()='Способ связи']]")).click();
+        driver.findElement(By.xpath("//div[label/div/span[text()='Способ связи']]")).click();
         driver.findElement(By.xpath(String.format("//button[@title='%s']",communicationМethod[0]))).click();
-        cleanAndEnter(By.xpath("sameLocator"),communicationМethod[1]);
+        cleanAndEnter(By.xpath("//div[label/div/span[text()='Способ связи']]/following-sibling::input"),communicationМethod[1]);
         driver.findElement(By.xpath("//button[text()='Добавить']")).click();
 
     }
@@ -108,13 +109,15 @@ public class AboutMySelfPage extends GeneralPage {
         checkStateAndClickCheckbox(jobFormat[1], jobFormatFlexibleInpulLocator, jobFormatFlexibleDivLocator);
         checkStateAndClickCheckbox(jobFormat[2], jobFormatRemoteInpulLocator, jobFormatRemoteDivLocator);
         ///добавление контактов
-    //    addCommunicationMethod(communicationМethod1);
-      //  addCommunicationMethod(communicationМethod1);
+        addCommunicationMethod(communicationМethod1);
+        addCommunicationMethod(communicationМethod2);
 
         ///пол
         WebDriverWait webDriverWait = new WebDriverWait(driver,Duration.ofSeconds(30));
         webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("id_gender")));
-        driver.findElement(By.xpath("//option[@value='m']")).click();
+        driver.findElement(By.xpath(String.format("//option[@value='%s']",sex))).click();
+        cleanAndEnter(By.id("id_company"),company);
+        cleanAndEnter(By.id("id_work"),jobTitle);
 
             //сoхраняемся
         driver.findElement(By.xpath("//button[@name='continue']")).click();
@@ -123,7 +126,13 @@ public class AboutMySelfPage extends GeneralPage {
 
         }
         public void assertMySelfData(){
-        assert 1==1;
+
+            Assertions.assertEquals(nameLat,driver.findElement(By.id("id_fname_latin")).getAttribute("value"),"nameLat is right");
+            Assertions.assertEquals(surname,driver.findElement(By.id("id_lname")).getAttribute("value"),"surname is right");
+            Assertions.assertEquals(surnameLat,driver.findElement(By.id("id_lname_latin")).getAttribute("value"),"surnameLat is right");
+            Assertions.assertEquals(nickName,driver.findElement(By.id("id_blog_name")).getAttribute("value"),"nickName is right");
+     //       Assertions.assertEquals(birthDay,driver.findElement(By.id("date_of_birth")).getAttribute("value"),"birthDay is right");
+
         }
 
 

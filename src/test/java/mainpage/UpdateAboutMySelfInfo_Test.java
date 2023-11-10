@@ -10,7 +10,8 @@ import pages.AccountPage;
 import pages.LoginOtusPage;
 import waiters.Waiters;
 
-import java.util.logging.Logger;
+import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.filter;
 
 
 public class UpdateAboutMySelfInfo_Test {
-Logger logger = Logger.getLogger("");
+private static final Logger logger = (Logger) LogManager.getLogger();
 
    
     private WebDriver driver;
@@ -72,23 +73,23 @@ Logger logger = Logger.getLogger("");
     }
 
     @Test
-    public void openingMainPage() throws InterruptedException {
+    public void checkUpdateInfo() throws InterruptedException {
         
        // driver.manage().window().maximize();
         new LoginOtusPage(driver).openPage("/"); //переход на главную страницу
-        new LoginOtusPage(driver).loginOtus();//авторизация
-        new AccountPage(driver).entryLkOtus();//вход в личный кабинет
-        new AboutMySelfPage(driver).updateMySelf(); //Обновление данных о себе
-        close();//закрываем браузер
-        init();//открываем браузер снова
-        new LoginOtusPage(driver).openPage("/");//переход на главную страницу
+       // new LoginOtusPage(driver).loginOtus();//авторизация
+        //new AccountPage(driver).entryLkOtus();//вход в личный кабинет
+        //new AboutMySelfPage(driver).updateMySelf(); //Обновление данных о себе
+        //close();//закрываем браузер
+        //init();//открываем браузер снова
+        //new LoginOtusPage(driver).openPage("/");//переход на главную страницу
         new LoginOtusPage(driver).loginOtus();//авторизация
         new AccountPage(driver).entryLkOtus();//вход в личный кабинет
         new AboutMySelfPage(driver).assertMySelfData();
 
 
         try {
-            sleep(5000);
+            sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

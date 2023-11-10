@@ -23,6 +23,7 @@ private final String BASE_URL=System.getProperty("base.url","https://otus.ru");
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         element.clear();
         element.sendKeys(sendedKey);
+
     }
     public void openPage(String path){
         driver.get(BASE_URL+path);
