@@ -6,7 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class WebDriverFactory {
-    private final String BROWSER_NAME = System.getProperty("browser","chrome");
+    private final String BROWSER_NAME = System.getProperty("browser","firefox");
 
 
     public WebDriver create() {

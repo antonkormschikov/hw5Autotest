@@ -51,8 +51,8 @@ private static final Logger logger = (Logger) LogManager.getLogger();
     @BeforeAll
     public static void manager(){
 
-           WebDriverManager.chromedriver().setup();
-         //  WebDriverManager.firefoxdriver().setup();
+           //WebDriverManager.chromedriver().setup();
+           WebDriverManager.firefoxdriver().setup();
         }
 
 
