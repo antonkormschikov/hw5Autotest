@@ -4,6 +4,7 @@ import data.ICityData;
 import factory.WebDriverFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import pages.AboutMySelfPage;
 import pages.AccountPage;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.filter;
 
 
 public class UpdateAboutMySelfInfo_Test {
-private static final Logger logger = (Logger) LogManager.getLogger();
+private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMySelfInfo_Test.class);
 
    
     private WebDriver driver;
@@ -76,17 +77,17 @@ private static final Logger logger = (Logger) LogManager.getLogger();
     public void checkUpdateInfo() throws InterruptedException {
         
        // driver.manage().window().maximize();
+
         new LoginOtusPage(driver).openPage("/"); //переход на главную страницу
-       // new LoginOtusPage(driver).loginOtus();//авторизация
-        //new AccountPage(driver).entryLkOtus();//вход в личный кабинет
-        //new AboutMySelfPage(driver).updateMySelf(); //Обновление данных о себе
-        //close();//закрываем браузер
-        //init();//открываем браузер снова
-        //new LoginOtusPage(driver).openPage("/");//переход на главную страницу
+        new LoginOtusPage(driver).loginOtus();//авторизация
+        new AccountPage(driver).entryLkOtus();//вход в личный кабинет
+        new AboutMySelfPage(driver).updateMySelf(); //Обновление данных о себе
+        close();//закрываем браузер
+        init();//открываем браузер снова
+        new LoginOtusPage(driver).openPage("/");//переход на главную страницу
         new LoginOtusPage(driver).loginOtus();//авторизация
         new AccountPage(driver).entryLkOtus();//вход в личный кабинет
         new AboutMySelfPage(driver).assertMySelfData();
-
 
         try {
             sleep(1000);

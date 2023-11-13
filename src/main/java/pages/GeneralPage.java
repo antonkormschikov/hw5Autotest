@@ -1,6 +1,8 @@
 package pages;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,13 +11,14 @@ import pageobject.AbsPageObject;
 
 public abstract class GeneralPage extends AbsPageObject{
 private final String BASE_URL=System.getProperty("base.url","https://otus.ru");
+    //public static final Logger logger = (Logger) LogManager.getLogger();
     public GeneralPage(WebDriver driver)
     {super(driver);
     }
 
     public void cleanAndEnter(By by, String sendedKey){
         WebElement element = driver.findElement(by);
-           waiters.waitElementVisible(element);
+        //   waiters.waitElementVisible(element);
         new Actions(driver).moveToElement(element)
                 .click()
                 .perform();

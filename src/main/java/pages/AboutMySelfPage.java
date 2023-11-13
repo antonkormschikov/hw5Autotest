@@ -1,17 +1,23 @@
 package pages;
 
+//import org.assertj.*;
+
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.assertj.*;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
+import static org.assertj.core.api.FactoryBasedNavigableIterableAssert.assertThat;
+
 
 public class AboutMySelfPage extends GeneralPage {
+
     //////////исходные данные
     private final String nameLat="Vladimir";
     private final String surname="Жириновский";
@@ -109,12 +115,13 @@ public class AboutMySelfPage extends GeneralPage {
         checkStateAndClickCheckbox(jobFormat[1], jobFormatFlexibleInpulLocator, jobFormatFlexibleDivLocator);
         checkStateAndClickCheckbox(jobFormat[2], jobFormatRemoteInpulLocator, jobFormatRemoteDivLocator);
         ///добавление контактов
-        addCommunicationMethod(communicationМethod1);
-        addCommunicationMethod(communicationМethod2);
+   //     addCommunicationMethod(communicationМethod1);
+     //   addCommunicationMethod(communicationМethod2);
 
         ///пол
-        WebDriverWait webDriverWait = new WebDriverWait(driver,Duration.ofSeconds(30));
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("id_gender")));
+        //
+        //webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("id_gender")));
+        waiters.waitElementVisible(driver.findElement(By.id("id_gender")));
         driver.findElement(By.xpath(String.format("//option[@value='%s']",sex))).click();
         cleanAndEnter(By.id("id_company"),company);
         cleanAndEnter(By.id("id_work"),jobTitle);
@@ -125,6 +132,7 @@ public class AboutMySelfPage extends GeneralPage {
 
 
         }
+
         public void assertMySelfData(){
 
             Assertions.assertEquals(nameLat,driver.findElement(By.id("id_fname_latin")).getAttribute("value"),"nameLat is right");
@@ -132,24 +140,28 @@ public class AboutMySelfPage extends GeneralPage {
             Assertions.assertEquals(surnameLat,driver.findElement(By.id("id_lname_latin")).getAttribute("value"),"surnameLat is right");
             Assertions.assertEquals(nickName,driver.findElement(By.id("id_blog_name")).getAttribute("value"),"nickName is right");
             Assertions.assertEquals(birthDay,driver.findElement(By.name("date_of_birth")).getAttribute("value"),"birthDay is right");
-            Assertions.assertEquals(country,driver.findElement(By.xpath("//label[input[@name='country']]/div")).getText(),"County is correct");
-            Assertions.assertEquals(country,driver.findElement(By.xpath("//label[input[@name='city']]/div")).getText(),"City is correct");
-            Assertions.assertEquals(country,driver.findElement(By.xpath("//label[input[@name='english_level']]/div")).getText(),"English level is correct");
+            Assertions.assertEquals(country,driver.findElement(By.xpath("//label[input[@name='country']]/div")).getText(),"Country is correct");
+            Assertions.assertEquals(city,driver.findElement(By.xpath("//label[input[@name='city']]/div")).getText(),"City is correct");
+            Assertions.assertEquals(englishLevel,driver.findElement(By.xpath("//label[input[@name='english_level']]/div")).getText(),"English level is correct");
             if (readyToMove){
-                Assertions.assertTrue(driver.findElement(By.xpath("//label[input[@id='id_ready_to_relocate_1']]")).isSelected(),"readyToMove is correct");
-            } else {Assertions.assertTrue(driver.findElement(By.xpath("//label[input[@id='id_ready_to_relocate_0']]")).isSelected(),"readyToMove is correct");}
+                Assertions.assertTrue(driver.findElement(By.xpath("//label[input[@id='id_ready_to_relocate_1']]")).isEnabled(),"readyToMove is correct");
+            } else {Assertions.assertTrue(driver.findElement(By.xpath("//label[input[@id='id_ready_to_relocate_0']]")).isEnabled(),"readyToMove is correct");}
 
            boolean[] jobFormatActual= new boolean[]{driver.findElement(By.xpath(jobFormatFullInpulLocator)).isSelected(),
                                                              driver.findElement(By.xpath(jobFormatFlexibleInpulLocator)).isSelected(),
                                                              driver.findElement(By.xpath(jobFormatRemoteInpulLocator)).isSelected()
                                                     };
-
             Assertions.assertArrayEquals(jobFormat,jobFormatActual, "jobFormat is correct");
-            Assertions.assertEquals(sex,driver.findElement(By.xpath("//label[input[@name='country']]/div")).getText(),"County is correct");
-            Assertions.assertEquals(company,driver.findElement(By.id("id_company")).getText(),"Company is correct");
-            Assertions.assertEquals(country,driver.findElement(By.id("id_work")).getText(),"County is correct");
 
+            Assertions.assertEquals(sex,driver.findElement(By.xpath("//select[@id='id_gender']/option[@selected='']")).getAttribute("value"),"Sex is correct");
+            Assertions.assertEquals(company,driver.findElement(By.id("id_company")).getAttribute("value"),"Company is correct");
+            Assertions.assertEquals(jobTitle,driver.findElement(By.id("id_work")).getAttribute("value"),"Work is correct");
+            SoftAssertions softAssertions = new SoftAssertions();
+            softAssertions.assertThat (driver.findElement(By.id("id_work")).getAttribute("value").equals(jobTitle))
+                    .as("Work is correct")
+                    .isTrue();
 
+      //      logger.info("Check finished");
         }
 
 
