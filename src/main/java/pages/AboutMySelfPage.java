@@ -122,9 +122,9 @@ public class AboutMySelfPage extends GeneralPage {
         checkStateAndClickCheckbox(jobFormat[1], jobFormatFlexibleInpulLocator, jobFormatFlexibleDivLocator);
         checkStateAndClickCheckbox(jobFormat[2], jobFormatRemoteInpulLocator, jobFormatRemoteDivLocator);*/
         ///добавление контактов
-      //  addCommunicationMethod(communicationМethod1,0);
+        addCommunicationMethod(communicationМethod1,0);
         js.executeScript("window.scrollBy(0,700)");
-   //     addCommunicationMethod(communicationМethod2,1);
+        addCommunicationMethod(communicationМethod2,1);
 
         ///пол
         //
@@ -173,7 +173,7 @@ public class AboutMySelfPage extends GeneralPage {
             Assertions.assertEquals(sex,driver.findElement(By.xpath("//select[@id='id_gender']/option[@selected='']")).getAttribute("value"),"Sex is correct");
             Assertions.assertEquals(company,driver.findElement(By.id("id_company")).getAttribute("value"),"Company is correct");
             Assertions.assertEquals(jobTitle,driver.findElement(By.id("id_work")).getAttribute("value"),"Work is correct");
-            SoftAssertions softAssertions = new SoftAssertions();
+         //   SoftAssertions softAssertions = new SoftAssertions();
 
         }
 
