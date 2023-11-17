@@ -10,8 +10,8 @@ import org.openqa.selenium.interactions.Actions;
 import pageobject.AbsPageObject;
 
 public abstract class GeneralPage extends AbsPageObject{
+    private static final Logger logger = (Logger) LogManager.getLogger(GeneralPage.class);
 private final String BASE_URL=System.getProperty("base.url","https://otus.ru");
-    //public static final Logger logger = (Logger) LogManager.getLogger();
     public GeneralPage(WebDriver driver)
     {super(driver);
     }
