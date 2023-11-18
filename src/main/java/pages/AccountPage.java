@@ -1,5 +1,7 @@
 package pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +10,7 @@ import pageobject.AbsPageObject;
 import java.time.Duration;
 
 public class AccountPage extends GeneralPage {
-
+    private static final Logger logger = (Logger) LogManager.getLogger(AccountPage.class);
     public AccountPage (WebDriver driver){
         super(driver);
     }

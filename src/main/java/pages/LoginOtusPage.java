@@ -1,5 +1,7 @@
 package pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pageobject.AbsPageObject;
@@ -7,8 +9,8 @@ import waiters.Waiters;
 
 
 public class LoginOtusPage extends GeneralPage {
-    private final String LOGIN="oxilqrxobfqlrd@hldrive.com";//System.getProperty("login");
-    private final String PASSWORD="Opera-324";//System.getProperty("password");
+    private final String LOGIN=System.getProperty("login");
+    private final String PASSWORD=System.getProperty("password");
     private String enterButtonLocator="//button[text()='Войти']";
     private String inputEmailLocator="//div/input[@name='email']";
     private String inputPassLocator="//input[@type='password']";
@@ -17,7 +19,7 @@ public class LoginOtusPage extends GeneralPage {
     public LoginOtusPage(WebDriver driver) {
         super(driver);
     }
-
+    private static final Logger logger = (Logger) LogManager.getLogger(LoginOtusPage.class);
 
     public void loginOtus() {
         driver.findElement(By.xpath(enterButtonLocator)).click();

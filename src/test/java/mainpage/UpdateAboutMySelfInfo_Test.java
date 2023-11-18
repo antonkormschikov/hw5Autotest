@@ -40,19 +40,10 @@ private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMy
     // в виде ссылки на GitHub репозиторий
 
 
-    public void  selectCity (ICityData cityData){
-        String locatorCountry = String.format("//div[@title='$s']",cityData.getCountryData().getName());
 
-        //select
-
-        String locatorCity = String.format("//div[@title='$s']",cityData.getName());
-    //select
-
-    }
     @BeforeAll
     public static void manager(){
-
-           //WebDriverManager.chromedriver().setup();
+           WebDriverManager.chromedriver().setup();
            WebDriverManager.firefoxdriver().setup();
         }
 
@@ -68,7 +59,7 @@ private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMy
     @AfterEach
     public void close(){
         if (driver != null) {
-         //   driver.close();
+            driver.close();
             driver.quit();
         }
     }
@@ -76,7 +67,7 @@ private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMy
     @Test
     public void checkUpdateInfo() throws InterruptedException {
         
-       // driver.manage().window().maximize();
+        driver.manage().window().maximize();
 
         new LoginOtusPage(driver).openPage("/"); //переход на главную страницу
         new LoginOtusPage(driver).loginOtus();//авторизация
@@ -88,20 +79,6 @@ private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMy
         new LoginOtusPage(driver).loginOtus();//авторизация
         new AccountPage(driver).entryLkOtus();//вход в личный кабинет
         new AboutMySelfPage(driver).assertMySelfData();
-
-        try {
-            sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        ////h2[text()='Авторские онлайн‑курсы для профессионалов']/ancestor::section/div
-        ////div[./h2[text()='Авторские онлайн‑курсы для профессионалов']]
-     /*   WebElement header= driver.findElement(By.xpath("//div[./h2[text()='Авторские онлайн‑курсы для профессионалов']]"));
-        assertThat(waiters.waitElementVisible(header))
-                .as("Header with text should be visible")
-                .isTrue();*/
-
 
     }
 

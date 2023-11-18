@@ -19,7 +19,7 @@
         <base.url>https://otus.ru</base.url>
         <log4j-core.version>2.16.0</log4j-core.version>
         <log4j-slf4j2.version>2.20.0</log4j-slf4j2.version>
-        <assertj.version>3.24.2</assertj.version>
+
     </properties>
 
     <dependencies>
@@ -47,11 +47,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj.version}</version>
         </dependency>
 
     </dependencies>
