@@ -38,7 +38,10 @@ private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMy
 
 
     @BeforeAll
+
     public static void manager(){
+
+
            WebDriverManager.chromedriver().setup();
            WebDriverManager.firefoxdriver().setup();
         }
@@ -50,6 +53,7 @@ private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMy
 
         driver = new WebDriverFactory().create();
         this.waiters = new Waiters(driver);
+        driver.manage().window().maximize();
     }
 
     @AfterEach
@@ -63,10 +67,11 @@ private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMy
 
     @Test
     public void checkUpdateInfo() throws InterruptedException {
+
         LoginOtusPage loginOtusPage = new LoginOtusPage(driver);
         AccountPage accountPage = new AccountPage(driver);
         AboutMySelfPage aboutMySelfPage =new AboutMySelfPage(driver);
-
+      
         driver.manage().window().maximize();
 
         loginOtusPage.openPage("/"); //переход на главную страницу
@@ -81,5 +86,9 @@ private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMy
         aboutMySelfPage.assertMySelfData();
 
     }
+
+   
+
+
 
 }

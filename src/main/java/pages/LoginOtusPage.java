@@ -9,6 +9,9 @@ import waiters.Waiters;
 
 
 public class LoginOtusPage extends GeneralPage {
+
+    private static final Logger logger = (Logger) LogManager.getLogger(LoginOtusPage.class);
+
     private final String LOGIN=System.getProperty("login");
     private final String PASSWORD=System.getProperty("password");
     private String enterButtonLocator="//button[text()='Войти']";
@@ -19,14 +22,16 @@ public class LoginOtusPage extends GeneralPage {
     public LoginOtusPage(WebDriver driver) {
         super(driver);
     }
-    private static final Logger logger = (Logger) LogManager.getLogger(LoginOtusPage.class);
+   
 
     public void loginOtus() {
-        driver.findElement(By.xpath(enterButtonLocator)).click();
-        cleanAndEnter(By.xpath(inputEmailLocator),LOGIN);
-        cleanAndEnter(By.xpath(inputPassLocator),PASSWORD);
-        driver.findElement(By.xpath(enterButtonLocator2)).click();
-
+        logger.info("----Login OTUS----");
+        try {
+            driver.findElement(By.xpath(enterButtonLocator)).click();
+            cleanAndEnter(By.xpath(inputEmailLocator), LOGIN);
+            cleanAndEnter(By.xpath(inputPassLocator), PASSWORD);
+            driver.findElement(By.xpath(enterButtonLocator2)).click();
+        } catch (Exception e){logger.info(e.getMessage());}
     }
 
 }

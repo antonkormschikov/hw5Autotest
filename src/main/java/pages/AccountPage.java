@@ -15,6 +15,7 @@ public class AccountPage extends GeneralPage {
         super(driver);
     }
     public void entryLkOtus(){
+        logger.info("----Вхход в ЛК ОТУС----");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         WebElement raskr= driver.findElement(By.cssSelector("section>div:nth-child(2)>span"));
         waiters.waitElementVisible(raskr);

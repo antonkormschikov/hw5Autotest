@@ -13,6 +13,7 @@ public abstract class GeneralPage extends AbsPageObject{
 
 private final String BASE_URL=System.getProperty("base.url","https://otus.ru");
     public static final Logger logger = (Logger) LogManager.getLogger(GeneralPage.class);
+
     public GeneralPage(WebDriver driver)
     {super(driver);
     }
