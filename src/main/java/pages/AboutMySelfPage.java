@@ -1,7 +1,5 @@
 package pages;
 
-
-
 import data.CountryData;
 import data.EnglishLevelData;
 import data.RussiaCityData;
