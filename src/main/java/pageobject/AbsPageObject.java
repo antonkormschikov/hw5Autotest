@@ -3,7 +3,7 @@ package pageobject;
 import org.openqa.selenium.WebDriver;
 import waiters.Waiters;
 
-public class AbsPageObject {
+public abstract class  AbsPageObject {
     protected WebDriver driver;
     protected Waiters waiters;
 

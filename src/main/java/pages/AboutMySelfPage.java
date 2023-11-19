@@ -26,9 +26,7 @@ public class AboutMySelfPage extends GeneralPage {
     private final String englishLevel="ELEMENTARY";
     private final boolean readyToMove=true;
     private final boolean[] jobFormat= new boolean[]{true,true,false};
-    /*private String email="oxilqrxobfqlrd@hldrive.com";
-    private String phone="+79998887766";*/
-    private final String sex="m";
+      private final String sex="m";
     private final String company="Кремль";
     private final String jobTitle="Депутат";
     private final String[] communicationМethod1= new String[]{"VK","vk.com/test"};

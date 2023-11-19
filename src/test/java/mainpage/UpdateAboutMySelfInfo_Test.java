@@ -1,30 +1,26 @@
 package mainpage;
 
-import data.ICityData;
+
 import factory.WebDriverFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import pages.AboutMySelfPage;
 import pages.AccountPage;
 import pages.LoginOtusPage;
 import waiters.Waiters;
-
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.LogManager;
 
-import static java.lang.Thread.sleep;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.filter;
 
 
 public class UpdateAboutMySelfInfo_Test {
 private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMySelfInfo_Test.class);
 
-   
+
     private WebDriver driver;
     private Waiters waiters;
+
 
     // Шаги теста:
 //    Открыть https://otus.ru
@@ -64,21 +60,25 @@ private static final Logger logger = (Logger) LogManager.getLogger(UpdateAboutMy
         }
     }
 
+
     @Test
     public void checkUpdateInfo() throws InterruptedException {
-        
+        LoginOtusPage loginOtusPage = new LoginOtusPage(driver);
+        AccountPage accountPage = new AccountPage(driver);
+        AboutMySelfPage aboutMySelfPage =new AboutMySelfPage(driver);
+
         driver.manage().window().maximize();
 
-        new LoginOtusPage(driver).openPage("/"); //переход на главную страницу
-        new LoginOtusPage(driver).loginOtus();//авторизация
-        new AccountPage(driver).entryLkOtus();//вход в личный кабинет
-        new AboutMySelfPage(driver).updateMySelf(); //Обновление данных о себе
+        loginOtusPage.openPage("/"); //переход на главную страницу
+        loginOtusPage.loginOtus();//авторизация
+        accountPage.entryLkOtus();//вход в личный кабинет
+        aboutMySelfPage.updateMySelf(); //Обновление данных о себе
         close();//закрываем браузер
         init();//открываем браузер снова
-        new LoginOtusPage(driver).openPage("/");//переход на главную страницу
-        new LoginOtusPage(driver).loginOtus();//авторизация
-        new AccountPage(driver).entryLkOtus();//вход в личный кабинет
-        new AboutMySelfPage(driver).assertMySelfData();
+        loginOtusPage.openPage("/");//переход на главную страницу
+        loginOtusPage.loginOtus();//авторизация
+        accountPage.entryLkOtus();//вход в личный кабинет
+        aboutMySelfPage.assertMySelfData();
 
     }
 
