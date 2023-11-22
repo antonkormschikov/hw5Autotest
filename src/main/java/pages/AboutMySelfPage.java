@@ -171,12 +171,10 @@ public class AboutMySelfPage extends GeneralPage {
 
     Assertions.assertTrue(driver.findElement(By.xpath(String.format(communicationMethodTypeLocator, communicationМethod1[0]))).isDisplayed());
     Assertions.assertEquals(communicationМethod1[1],
-            driver.findElement(By.xpath(String.format(communicationMethodStringLocator, communicationМethod1[0]))));
+            driver.findElement(By.xpath(String.format(communicationMethodStringLocator, communicationМethod1[0]))).getAttribute("value"));
     Assertions.assertTrue(driver.findElement(By.xpath(String.format(communicationMethodTypeLocator, communicationМethod2[0]))).isDisplayed());
     Assertions.assertEquals(communicationМethod2[1],
-            driver.findElement(By.xpath(String.format(communicationMethodStringLocator, communicationМethod2[0]))));
-
-
+            driver.findElement(By.xpath(String.format(communicationMethodStringLocator, communicationМethod2[0]))).getAttribute("value"));
     Assertions.assertEquals(sex, driver.findElement(By.xpath("//select[@id='id_gender']/option[@selected='']")).getAttribute("value"), "Sex is correct");
     Assertions.assertEquals(company, driver.findElement(By.id("id_company")).getAttribute("value"), "Company is correct");
     Assertions.assertEquals(jobTitle, driver.findElement(By.id("id_work")).getAttribute("value"), "Work is correct");

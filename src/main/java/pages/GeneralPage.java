@@ -33,7 +33,7 @@ private final String BASE_URL=System.getProperty("base.url","https://otus.ru");
     public void openPage(String path){
         driver.get(BASE_URL+path);
     }
-    public void checkStateAndClickCheckbox(Boolean mustBeState, String inputLocator, String divLocator){
+    public void checkStateAndClickCheckbox(boolean mustBeState, String inputLocator, String divLocator){
         if (mustBeState) {
             if (!driver.findElement(By.xpath(inputLocator)).isSelected()){
                 driver.findElement(By.xpath(divLocator)).click();
